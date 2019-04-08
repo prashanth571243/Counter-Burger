@@ -9,3 +9,4 @@ Frontend: React
 Backend: Go
 Database: MongoDB
 ```
+#### Progress Week:2
