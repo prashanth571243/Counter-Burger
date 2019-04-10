@@ -6,5 +6,7 @@ React for front end <br />
 Go for backend <br />
 NoSQL database - MongoDB since it is a payments system and requires to be consistent always <br />
 
+## Initial Discussion on database architecture
+MySQL for login details, MongoDB for details of products, Riak for storing products and their count.  
 
 
