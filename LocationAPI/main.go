@@ -1,6 +1,7 @@
 package main
 
 import (
+    "fmt"
     _"encoding/json"
     "log"
     "net/http"
@@ -9,16 +10,16 @@ import (
 )
 
 func GetStars(w http.ResponseWriter, r *http.Request)  {
-    
+    fmt.Fprintln(w, "get all stars not implemented yet !")
 }
 func GetStar(w http.ResponseWriter, r *http.Request)  {
-    
+    fmt.Fprintln(w, "get star not implemented yet !")
 }
 func CreateStar(w http.ResponseWriter, r *http.Request)  {
-    
+    fmt.Fprintln(w, "star create not implemented yet !")
 }
 func DeleteStar(w http.ResponseWriter, r *http.Request)  {
-    
+    fmt.Fprintln(w, "star delete not implemented yet !")
 }
 
 func main() {
