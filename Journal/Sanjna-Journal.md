@@ -7,3 +7,13 @@ WOW factor - Multi tenancy with having a market place like Amazon - which has el
 
 Can implement different types of databases such as Riak and MongoDB to try out the AKF Cube like MongoDB sharding and Riak replication.
 
+Selected counter burger as the main project.
+
+Started coding the frontend in ReactJS.
+
+Decided to deploy go backend on Docker containers.
+
+Using MongoDB as the database.
+
+Planning to shard the Database on the basis of the type of food.
+
