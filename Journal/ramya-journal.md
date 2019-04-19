@@ -10,3 +10,8 @@ NoSQL database - MongoDB since it is a payments system and requires to be consis
 MySQL for login details, MongoDB for details of products, Riak for storing products and their count.  
 
 
+## Progress
+
+Week 1 - UI created for sign up
+
+
