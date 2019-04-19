@@ -13,5 +13,7 @@ MySQL for login details, MongoDB for details of products, Riak for storing produ
 ## Progress
 
 Week 1 - UI created for sign up
+Week 1 - UI created for login
+
 
 
