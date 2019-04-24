@@ -1,0 +1,23 @@
+.MenuOustide{
+    margin-left: 30%
+}
+
+.Menu{
+    margin-left: -1.5%;
+}
+
+.orderButton{
+    margin-left: 3%;
+    height: 50px;
+    width: 10%;
+    font-size: 20px;
+    font-weight: 700
+}
+
+.MenuCards{
+    margin-left: 0%
+}
+
+.cartButton{
+    margin : -10% 20% 0% 0%
+}
