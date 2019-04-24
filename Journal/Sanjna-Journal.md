@@ -17,3 +17,6 @@ Using MongoDB as the database.
 
 Planning to shard the Database on the basis of the type of food.
 
+Finished the menu backend
+
+Started with Payments frontend in React 
