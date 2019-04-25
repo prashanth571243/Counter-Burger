@@ -5,6 +5,7 @@ import Login from './User/Login'
 import LandingPage from './LandingPage/LandingPage'
 import Menu from './Menu/Menu';
 import Payments from './Payments/Payments';
+import Order from './Order/Order';
 
 
 class Main extends Component {
@@ -16,6 +17,7 @@ class Main extends Component {
              <Route path="/home" component={LandingPage}/>
              <Route path="/menu" component={Menu}/>
              <Route path="/payments" component={Payments}/>
+             <Route exact path="/burgerOrder" component={Order} />
             </div>
         )
 

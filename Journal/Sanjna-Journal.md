@@ -17,3 +17,19 @@ Using MongoDB as the database.
 
 Planning to shard the Database on the basis of the type of food.
 
+Finished the menu backend
+
+Started with Payments frontend in React.
+
+Created MongoDB instance on AWS which will be later replicated and sharded.
+
+Launch Linux AMI Server 2.2 Instance
+  AMI: Linux Server 2.2
+  Instance Type: t2.micro
+  VPC: cmpe281
+  Network: public subnet
+  Auto Public IP: yes
+  Security Group: mongodb
+  SG open ports: 22, 27017, 27018, 27019
+  Key Pair: cmpe281-us-west-1.pem
+  Name: config-server1

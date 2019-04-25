@@ -5,11 +5,11 @@ import (
 	// "encoding/json"
 	"encoding/json"
 	"fmt"
-	"os"
-	"strings"
-
 	"net"
 	"net/http"
+
+	// "os"
+	"strings"
 
 	"github.com/codegangsta/negroni"
 	"github.com/gorilla/handlers"
@@ -20,45 +20,26 @@ import (
 )
 
 const (
-	MongoDBHosts       = "ds143326.mlab.com:43326"
-	AuthDatabase       = "cmpe281"
-	AuthUserName       = "aditi1203"
-	AuthPassword       = "Aditi1203!"
-	mongodb_database   = "cmpe281"
-	mongodb_collection = "orders"
+	MongoDBHosts = "ds143326.mlab.com:43326"
+	AuthDatabase = "cmpe281"
+	AuthUserName = "aditi1203"
+	AuthPassword = "Aditi1203!"
+
 	// TestDatabase = "goinggo"
 )
 
-type BurgerOrder struct {
-	OrderId     string `json:"orderId" bson:"orderId"`
-	UserId      string `json:"userId" bson:"userId"`
-	OrderStatus string `json:"orderStatus" bson:"orderStatus"`
-	// Cart        []Items `json:"items" bson:"items"`
-	TotalAmount float32 `json:"totalAmount" bson:"totalAmount"`
-	// IpAddress   string  `json:"ipaddress" bson:"ipaddress"`
-}
+// var mongodb_server = os.Getenv("Server")
+// var mongodb_database = os.Getenv("Database")
+// var mongodb_collection = os.Getenv("Collection")
+// var mongo_user = os.Getenv("User")
+// var mongo_pass = os.Getenv("Pass")
 
-type RequiredPayload struct {
-	OrderId     string  `json:"orderId" bson:"orderId"`
-	UserId      string  `json:"userId" bson:"userId"`
-	ItemId      string  `json:"itemId"`
-	ItemName    string  `json:"itemName"`
-	Price       float32 `json:"price"`
-	Description string  `json:"description"`
-}
-
-var orders map[string]BurgerOrder
-
-func main() {
-
-	port := os.Getenv("PORT")
-	if len(port) == 0 {
-		port = "8000"
-	}
-
-	server := NewServer()
-	server.Run(":" + port)
-}
+var mongodb_server = "ds143326.mlab.com:43326"
+var mongodb_database = "cmpe281"
+var mongodb_collection = "orders"
+var mongo_user = "aditi1203"
+var mongo_pass = "Aditi1203!"
+var AWS_DB = "cmpe281"
 
 func NewServer() *negroni.Negroni {
 	formatter := render.New(render.Options{
@@ -101,151 +82,251 @@ func initRoutes(mx *mux.Router, formatter *render.Render) {
 	mx.HandleFunc("/order/{orderId}", getBurgerByOrderId(formatter)).Methods("GET")
 	mx.HandleFunc("/orders/{userId}", getBurgerByUserId(formatter)).Methods("GET")
 	mx.HandleFunc("/order", orderBurger(formatter)).Methods("POST")
-	// mx.HandleFunc("/order/{orderId}", burgerOrderPaid(formatter)).Methods("PUT")
-	// mx.HandleFunc("/order/{orderId}", burgerItemDelete(formatter)).Methods("DELETE")
-	// mx.HandleFunc("/order", burgerOrderDelete(formatter)).Methods("DELETE")
+	mx.HandleFunc("/order/{orderId}", orderStatusUpdate(formatter)).Methods("PUT")
+	mx.HandleFunc("/order/item/{orderId}", deleteOrderByItem(formatter)).Methods("POST")
+	mx.HandleFunc("/order/{orderId}", orderDeleteByOrderId(formatter)).Methods("DELETE")
 }
 
 func getAllBurgers(formatter *render.Render) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
-		// session, _ := mgo.Dial(mongodb_server)
-		mongoDBDialInfo := &mgo.DialInfo{
-			Addrs: []string{MongoDBHosts},
-			// Timeout:  20 * time.Second,
-			Database: AuthDatabase,
-			Username: AuthUserName,
-			Password: AuthPassword,
-		}
-		session, _ := mgo.DialWithInfo(mongoDBDialInfo)
-		// session, err := mgo.DialWithInfo(mongoDBDialInfo)
-		// if err != nil {
-		// 	log.Fatalf("CreateSession: %s\n", err)
-		// } else {
-		// 	fmt.Printf("successful")
-		// }
+
+		//setup
+		session, _ := mgo.Dial(mongodb_server)
 		defer session.Close()
 		session.SetMode(mgo.Monotonic, true)
-		// err:= session.DB("admin").Login(mongo_user, mongo_pass)
-		// if err!=nil{
-		// 	formatter.JSON(w, http.StatusInternalServerError, "Internal Server Error")
-		// 	return
-		// }
+		error := session.DB(AWS_DB).Login(mongo_user, mongo_pass)
+		if error != nil {
+			formatter.JSON(w, http.StatusInternalServerError, "Error: Authorization Error")
+			return
+		}
+		c := session.DB(mongodb_database).C(mongodb_collection)
 
-		var orders_array []BurgerOrder
-		err := session.DB(mongodb_database).C(mongodb_collection).Find(bson.M{}).All(&orders_array)
-		fmt.Println(session.DB("cmpe281").C("orders").Find(bson.M{}))
-		fmt.Println("Burger Orders:", orders_array)
-		fmt.Println("Burger check:", err)
-		formatter.JSON(w, http.StatusOK, orders_array)
+		//query
+		var ordersarray []BurgerOrder
+		err := c.Find(bson.M{}).All(&ordersarray)
+		fmt.Println("Burger Order:", ordersarray)
+		fmt.Println("Error in Burger Order:", err)
+		formatter.JSON(w, http.StatusOK, ordersarray)
 	}
 }
 
 func getBurgerByOrderId(formatter *render.Render) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
-		// session, _ := mgo.Dial(mongodb_server)
-		mongoDBDialInfo := &mgo.DialInfo{
-			Addrs:    []string{MongoDBHosts},
-			Database: AuthDatabase,
-			Username: AuthUserName,
-			Password: AuthPassword,
-		}
-		session, _ := mgo.DialWithInfo(mongoDBDialInfo)
+
+		//Setup
+		session, _ := mgo.Dial(mongodb_server)
 		defer session.Close()
 		session.SetMode(mgo.Monotonic, true)
-		// err:= session.DB("admin").Login(mongo_user, mongo_pass)
-		// if err!=nil{
-		// 	formatter.JSON(w, http.StatusInternalServerError, "Internal Server Error")
-		// 	return
-		// }
-
-		params := mux.Vars(req)
-		var orderid string = params["orderId"]
-		fmt.Println("inside get order by order id")
-		fmt.Println("orderID: ", orderid)
-		var result BurgerOrder
-		err := session.DB(mongodb_database).C(mongodb_collection).Find(bson.M{"orderId": orderid}).One(&result)
-		if err != nil {
-			fmt.Println("err")
-			formatter.JSON(w, http.StatusNotFound, "Requested Order Not Found")
+		error := session.DB(AWS_DB).Login(mongo_user, mongo_pass)
+		if error != nil {
+			formatter.JSON(w, http.StatusInternalServerError, "Internal Server Error")
 			return
 		}
-		_ = json.NewDecoder(req.Body).Decode(&result)
-		fmt.Println("Burger Order: ", result)
-		formatter.JSON(w, http.StatusOK, result)
+		c := session.DB(mongodb_database).C(mongodb_collection)
+
+		//Code for finding record based on orderId
+		parameter := mux.Vars(req)
+		var orderid string = parameter["orderId"]
+		fmt.Println("Inside get order by order id")
+		fmt.Println("Input orderID: ", orderid)
+		var burgerorder BurgerOrder
+		ordererr := c.Find(bson.M{"orderId": orderid}).One(&burgerorder)
+		if ordererr != nil {
+			fmt.Println("Sorry! Error Occured")
+			formatter.JSON(w, http.StatusNotFound, "Given OrderId Not Found")
+			return
+		}
+		_ = json.NewDecoder(req.Body).Decode(&burgerorder)
+		fmt.Println("Burger Order Details: ", burgerorder)
+		formatter.JSON(w, http.StatusOK, burgerorder)
 	}
 }
 
 func getBurgerByUserId(formatter *render.Render) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
-		// session, _ := mgo.Dial(mongodb_server)
-		mongoDBDialInfo := &mgo.DialInfo{
-			Addrs:    []string{MongoDBHosts},
-			Database: AuthDatabase,
-			Username: AuthUserName,
-			Password: AuthPassword,
-		}
-		session, _ := mgo.DialWithInfo(mongoDBDialInfo)
+
+		//setup
+		session, _ := mgo.Dial(mongodb_server)
 		defer session.Close()
 		session.SetMode(mgo.Monotonic, true)
-		// err:= session.DB("admin").Login(mongo_user, mongo_pass)
-		// if err!=nil{
-		// 	formatter.JSON(w, http.StatusInternalServerError, "Internal Server Error")
-		// 	return
-		// }
-
-		params := mux.Vars(req)
-		var userid string = params["userId"]
-		fmt.Println("Inside get order by user id")
-		fmt.Println("userId: ", userid)
-		var result BurgerOrder
-		err := session.DB(mongodb_database).C(mongodb_collection).Find(bson.M{"userId": userid}).One(&result)
-		if err != nil {
-			fmt.Println("err")
-			formatter.JSON(w, http.StatusNotFound, "Requested UserId Not Found")
+		error := session.DB(AWS_DB).Login(mongo_user, mongo_pass)
+		if error != nil {
+			formatter.JSON(w, http.StatusInternalServerError, "Error in Databse Connection")
 			return
 		}
-		_ = json.NewDecoder(req.Body).Decode(&result)
-		fmt.Println("Burger Order: ", result)
-		formatter.JSON(w, http.StatusOK, result)
+		c := session.DB(mongodb_database).C(mongodb_collection)
+
+		//Code for finding record
+		parameter := mux.Vars(req)
+		var userid string = parameter["userId"]
+		fmt.Println("Inside get order by User id")
+		fmt.Println("Input userId is: ", userid)
+		var burgerorder BurgerOrder
+		ordererror := c.Find(bson.M{"userId": userid}).One(&burgerorder)
+		if ordererror != nil {
+			fmt.Println("Sorry! Some error has occured")
+			formatter.JSON(w, http.StatusNotFound, "Given UserId Not Found")
+			return
+		}
+		_ = json.NewDecoder(req.Body).Decode(&burgerorder)
+		fmt.Println("Result of Burger order:", burgerorder)
+		formatter.JSON(w, http.StatusOK, burgerorder)
 	}
 }
 
+//Post a burger order
 func orderBurger(formatter *render.Render) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
-		// Open MongoDB Session
-		var orderdetail RequiredPayload
-		_ = json.NewDecoder(req.Body).Decode(&orderdetail)
-		// session, err := mgo.Dial(mongodb_server)
-		// if err:= session.DB("admin").Login(mongo_user, mongo_pass); err != nil {
-		// 	formatter.JSON(w, http.StatusInternalServerError, "Internal Server Error")
-		// 	return
-		// }
-		mongoDBDialInfo := &mgo.DialInfo{
-			Addrs:    []string{MongoDBHosts},
-			Database: AuthDatabase,
-			Username: AuthUserName,
-			Password: AuthPassword,
+
+		var user_order RequiredPayload
+		_ = json.NewDecoder(req.Body).Decode(&user_order)
+
+		//Setup
+		session, error := mgo.Dial(mongodb_server)
+		if error = session.DB(AWS_DB).Login(mongo_user, mongo_pass); error != nil {
+			formatter.JSON(w, http.StatusInternalServerError, "Internal server Error has occured")
+			return
 		}
-		session, _ := mgo.DialWithInfo(mongoDBDialInfo)
 		defer session.Close()
 		session.SetMode(mgo.Monotonic, true)
 		c := session.DB(mongodb_database).C(mongodb_collection)
-		var order BurgerOrder
 
-		fmt.Println("Orders: ", "Orders not found")
-		order = BurgerOrder{
-			OrderId:     orderdetail.OrderId,
-			UserId:      orderdetail.UserId,
-			OrderStatus: "Placed",
-			TotalAmount: orderdetail.Price}
-		_ = json.NewDecoder(req.Body).Decode(&order)
-		err := c.Insert(order)
-		if err != nil {
-			formatter.JSON(w, http.StatusInternalServerError, "Internal Server Error")
+		//Code to insert record
+		var ordertry BurgerOrder
+		var item_input BurgerItem
+		fmt.Println("argument1", user_order.Description)
+		item_input.ItemId = user_order.ItemId
+		item_input.ItemType = user_order.ItemType
+		item_input.ItemName = user_order.ItemName
+		item_input.Price = user_order.Price
+		item_input.Description = user_order.Description
+
+		record_error := c.Find(bson.M{"userId": user_order.OrderId, "orderStatus": "Active"}).One(&ordertry)
+		if record_error == nil {
+			fmt.Println("Order Exists: Adding to existing order")
+			ordertry.Order_Cart = append(ordertry.Order_Cart, item_input)
+			ordertry.TotalAmount = (ordertry.TotalAmount + item_input.Price)
+			c.Update(bson.M{"orderId": user_order.OrderId}, bson.M{"$set": bson.M{"items": ordertry.Order_Cart, "totalAmount": ordertry.TotalAmount}})
+		} else {
+			fmt.Println("New Order has been placed!")
+			ordertry = BurgerOrder{
+				UserId:  user_order.UserId,
+				OrderId: user_order.OrderId,
+				Order_Cart: []BurgerItem{
+					item_input},
+				OrderStatus: "Active",
+				TotalAmount: user_order.Price}
+			ordererror := c.Insert(ordertry)
+			if ordererror != nil {
+				formatter.JSON(w, http.StatusInternalServerError, "Internal Server Error: Error in Placing order")
+				return
+			}
+		}
+		formatter.JSON(w, http.StatusOK, ordertry)
+	}
+}
+
+//Delete entire order using orderId
+func orderDeleteByOrderId(formatter *render.Render) http.HandlerFunc {
+	return func(w http.ResponseWriter, req *http.Request) {
+		//Setup
+		session, error := mgo.Dial(mongodb_server)
+		if error = session.DB(AWS_DB).Login(mongo_user, mongo_pass); error != nil {
+			formatter.JSON(w, http.StatusInternalServerError, "Error in Database Connection")
 			return
 		}
+		defer session.Close()
+		session.SetMode(mgo.Monotonic, true)
+		c := session.DB(mongodb_database).C(mongodb_collection)
 
-		fmt.Println("Orders: ", orders)
-		formatter.JSON(w, http.StatusOK, order)
+		//code to delete entire order by orderId
+		parameter := mux.Vars(req)
+		var orderid string = parameter["orderId"]
+		fmt.Println("Inside delete order by orderId")
+		fmt.Println("orderID: ", orderid)
+		record_error := c.Remove(bson.M{"orderId": orderid})
+		if record_error != nil {
+			fmt.Println("Given orderid not present!")
+			formatter.JSON(w, http.StatusNotFound, "Sorry!Order Not Found")
+			return
+		}
+		formatter.JSON(w, http.StatusOK, "Order has been deleted: "+orderid)
+
+	}
+}
+
+//Delete part of order using ItemId
+func deleteOrderByItem(formatter *render.Render) http.HandlerFunc {
+	return func(w http.ResponseWriter, req *http.Request) {
+
+		var user_order RequiredPayload
+		_ = json.NewDecoder(req.Body).Decode(&user_order)
+		parameter := mux.Vars(req)
+
+		//Setup
+		session, error := mgo.Dial(mongodb_server)
+		if error = session.DB(AWS_DB).Login(mongo_user, mongo_pass); error != nil {
+			formatter.JSON(w, http.StatusInternalServerError, "Error in Database Connection")
+			return
+		}
+		defer session.Close()
+		session.SetMode(mgo.Monotonic, true)
+		c := session.DB(mongodb_database).C(mongodb_collection)
+
+		//code to delete entire order by orderId
+
+		var burgerorder BurgerOrder
+		var orderId string = parameter["orderId"]
+		fmt.Println("Input orderid is: ", orderId)
+		fmt.Println("Input itemId is: ", user_order.ItemId)
+		record_error := c.Find(bson.M{"orderId": orderId}).One(&burgerorder)
+		if record_error != nil {
+			fmt.Println("Given order not found")
+			formatter.JSON(w, http.StatusNotFound, "Sorry!Given order not found")
+			return
+		}
+		for i := 0; i < len(burgerorder.Order_Cart); i++ {
+			if burgerorder.Order_Cart[i].ItemId == user_order.ItemId {
+				burgerorder.TotalAmount = burgerorder.TotalAmount - burgerorder.Order_Cart[i].Price
+				burgerorder.Order_Cart = append(burgerorder.Order_Cart[0:i], burgerorder.Order_Cart[i+1:]...)
+				break
+			}
+		}
+		c.Update(bson.M{"orderId": orderId}, bson.M{"$set": bson.M{"items": burgerorder.Order_Cart, "totalAmount": burgerorder.TotalAmount}})
+		fmt.Println("Given orderId: ", user_order.OrderId)
+		fmt.Println("Item deleted: ", user_order.ItemId)
+		formatter.JSON(w, http.StatusOK, burgerorder)
+	}
+}
+
+//Update Burger-order-status on payment
+func orderStatusUpdate(formatter *render.Render) http.HandlerFunc {
+	return func(w http.ResponseWriter, req *http.Request) {
+
+		var statusdetail RequiredPayload
+		_ = json.NewDecoder(req.Body).Decode(&statusdetail)
+
+		//Setup
+		session, error := mgo.Dial(mongodb_server)
+		if error = session.DB(AWS_DB).Login(mongo_user, mongo_pass); error != nil {
+			formatter.JSON(w, http.StatusInternalServerError, "Database Connection Error")
+			return
+		}
+		defer session.Close()
+		session.SetMode(mgo.Monotonic, true)
+		c := session.DB(mongodb_database).C(mongodb_collection)
+
+		//Code to update order status
+		var ordertry BurgerOrder
+
+		record_error := c.Find(bson.M{"orderId": statusdetail.OrderId}).One(&ordertry)
+		if record_error != nil {
+			formatter.JSON(w, http.StatusNotFound, "Status not updated")
+		}
+
+		ordertry.OrderStatus = "Placed"
+		c.Update(bson.M{"orderId": ordertry.OrderId}, bson.M{"$set": bson.M{"orderStatus": ordertry.OrderStatus}})
+		formatter.JSON(w, http.StatusOK, ordertry)
+
 	}
 }
