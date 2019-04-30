@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/codegangsta/negroni"
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	uuid "github.com/satori/go.uuid"
 	"github.com/unrolled/render"
@@ -29,7 +30,11 @@ func NewServer() *negroni.Negroni {
 	n := negroni.Classic()
 	mx := mux.NewRouter()
 	initRoutes(mx, formatter)
-	n.UseHandler(mx)
+	allowedHeaders := handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"})
+	allowedMethods := handlers.AllowedMethods([]string{"GET", "POST", "PUT", "HEAD", "OPTIONS"})
+	allowedOrigins := handlers.AllowedOrigins([]string{"*"})
+
+	n.UseHandler(handlers.CORS(allowedHeaders, allowedMethods, allowedOrigins)(mx))
 	return n
 }
 
