@@ -4,9 +4,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/codegangsta/negroni"
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	uuid "github.com/satori/go.uuid"
 	"github.com/unrolled/render"
@@ -14,11 +16,11 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
-var mongodb_server = "ds253804.mlab.com:53804" //os.Getenv("AWS_MONGODB")
-var mongodb_database = "payments"              //os.Getenv("MONGODB_DBNAME")
-var mongodb_collection = "payments_details"    //os.Getenv("MONGODB_COLLECTION")
-var mongodb_username = "testuser1"             //os.Getenv("MONGODB_USERNAME")
-var mongodb_password = "testuser1"             //os.Getenv("MONGODB_PASSWORD")
+var mongodb_server = os.Getenv("AWS_MONGODB")
+var mongodb_database = os.Getenv("MONGODB_DBNAME")
+var mongodb_collection = os.Getenv("MONGODB_COLLECTION")
+var mongodb_username = os.Getenv("MONGODB_USERNAME")
+var mongodb_password = os.Getenv("MONGODB_PASSWORD")
 
 // NewServer configures and returns a Server.
 func NewServer() *negroni.Negroni {
@@ -28,7 +30,11 @@ func NewServer() *negroni.Negroni {
 	n := negroni.Classic()
 	mx := mux.NewRouter()
 	initRoutes(mx, formatter)
-	n.UseHandler(mx)
+	allowedHeaders := handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"})
+	allowedMethods := handlers.AllowedMethods([]string{"GET", "POST", "PUT", "HEAD", "OPTIONS"})
+	allowedOrigins := handlers.AllowedOrigins([]string{"*"})
+
+	n.UseHandler(handlers.CORS(allowedHeaders, allowedMethods, allowedOrigins)(mx))
 	return n
 }
 
@@ -38,8 +44,7 @@ func initRoutes(mx *mux.Router, formatter *render.Render) {
 	mx.HandleFunc("/payments", getAllPaymentDetails(formatter)).Methods("GET")
 	mx.HandleFunc("/payments", addPaymentsDetails(formatter)).Methods("POST")
 	mx.HandleFunc("/payment/{id}", getPaymentDetailsOfOne(formatter)).Methods("GET")
-	mx.HandleFunc("/payments/{id}", deletePaymentDetailsOfOne(formatter)).Methods("DELETE")
-	// mx.HandleFunc("/orders", gumballProcessOrdersHandler(formatter)).Methods("POST")
+	mx.HandleFunc("/payment/{id}", deletePaymentDetailsOfOne(formatter)).Methods("DELETE")
 }
 
 // API Ping Handler
@@ -53,7 +58,7 @@ func pingHandler(formatter *render.Render) http.HandlerFunc {
 func addPaymentsDetails(formatter *render.Render) http.HandlerFunc {
 	return func(writer http.ResponseWriter, req *http.Request) {
 		session, _ := mongo.Dial(mongodb_server)
-		err := session.DB("payments").Login(mongodb_username, mongodb_password)
+		err := session.DB("admin").Login(mongodb_username, mongodb_password)
 		if err != nil {
 			formatter.JSON(writer, http.StatusInternalServerError, "Mongo Connection Error ")
 			return
@@ -87,7 +92,7 @@ func addPaymentsDetails(formatter *render.Render) http.HandlerFunc {
 func getAllPaymentDetails(formatter *render.Render) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		session, _ := mongo.Dial(mongodb_server)
-		err := session.DB("payments").Login(mongodb_username, mongodb_password)
+		err := session.DB("admin").Login(mongodb_username, mongodb_password)
 		if err != nil {
 			formatter.JSON(w, http.StatusInternalServerError, "Mongo Connection Error")
 			return
@@ -98,6 +103,7 @@ func getAllPaymentDetails(formatter *render.Render) http.HandlerFunc {
 		var result []bson.M
 		err = c.Find(nil).All(&result)
 		if err != nil {
+			fmt.Println("error:" + err.Error())
 			formatter.JSON(w, http.StatusNotFound, "Get All Payment Error")
 			return
 		}
@@ -110,7 +116,7 @@ func getAllPaymentDetails(formatter *render.Render) http.HandlerFunc {
 func getPaymentDetailsOfOne(formatter *render.Render) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		session, _ := mongo.Dial(mongodb_server)
-		err := session.DB("payments").Login(mongodb_username, mongodb_password)
+		err := session.DB("admin").Login(mongodb_username, mongodb_password)
 		if err != nil {
 			formatter.JSON(w, http.StatusInternalServerError, "Mongo Connection Error")
 			return
@@ -126,7 +132,7 @@ func getPaymentDetailsOfOne(formatter *render.Render) http.HandlerFunc {
 			formatter.JSON(w, http.StatusNotFound, "Get a Payment Error")
 			return
 		}
-		fmt.Println("getAllPaymentDetails:", result)
+		fmt.Println("getAPaymentDetail:", result)
 		formatter.JSON(w, http.StatusOK, result)
 	}
 }
@@ -135,7 +141,7 @@ func getPaymentDetailsOfOne(formatter *render.Render) http.HandlerFunc {
 func deletePaymentDetailsOfOne(formatter *render.Render) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		session, _ := mongo.Dial(mongodb_server)
-		err := session.DB("payments").Login(mongodb_username, mongodb_password)
+		err := session.DB("admin").Login(mongodb_username, mongodb_password)
 		if err != nil {
 			formatter.JSON(w, http.StatusInternalServerError, "Mongo Connection Error")
 			return
@@ -148,7 +154,8 @@ func deletePaymentDetailsOfOne(formatter *render.Render) http.HandlerFunc {
 		err = c.Find(bson.M{"paymentid": params["id"]}).One(&result)
 		fmt.Println("", err)
 		if err != nil {
-			formatter.JSON(w, http.StatusNotFound, "Get a Payment Error")
+			fmt.Println("error:" + err.Error())
+			formatter.JSON(w, http.StatusNotFound, "Delete a Payment Error")
 			return
 		} else {
 			err = c.Remove(bson.M{"paymentid": result.PaymentID})
@@ -158,7 +165,7 @@ func deletePaymentDetailsOfOne(formatter *render.Render) http.HandlerFunc {
 				return
 			}
 		}
-		fmt.Println("getAllPaymentDetails:", result)
+		fmt.Println("DeletePaymentDetails:", result)
 		formatter.JSON(w, http.StatusOK, result)
 	}
 }
