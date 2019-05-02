@@ -19,9 +19,9 @@ CREATE TABLE user (
 Database used - MongoDB
 Database Name - counterburger
 Collection Name - menu
-ItemId          string 	
-ItemName		string 
-Price 			int	   
-Description 	string
-ItemType		string
+ItemId: string 	
+ItemName: string 
+Price: int	   
+Description: string
+ItemType: string
 ```
