@@ -12,3 +12,16 @@ CREATE TABLE user (
     PRIMARY KEY (email)
 );
 ```
+
+## Menu
+
+```
+Database used - MongoDB
+Database Name - counterburger
+Collection Name - menu
+ItemId          string 	
+ItemName		string 
+Price 			int	   
+Description 	string
+ItemType		string
+```
