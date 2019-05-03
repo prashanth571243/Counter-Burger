@@ -12,15 +12,27 @@ import (
 	"net"
 	"strings"
 	"gopkg.in/mgo.v2/bson"
-
+	"os"
 )
 
 // MongoDB Config
-var database_server = "ds227185.mlab.com:27185"
-var database = "counterburger"
-var collection = "menu"
-var mongo_user = "cmpe281"
-var mongo_pass = "cmpe281" 
+// var database_server = "ds227185.mlab.com:27185"
+// var database = "counterburger"
+// var collection = "menu"
+// var mongo_user = "cmpe281"
+// var mongo_pass = "cmpe281" 
+
+var database_server = os.Getenv("Server")
+var database = os.Getenv("Database")
+var collection = os.Getenv("Collection")
+var mongo_user = os.Getenv("User")
+var mongo_pass = os.Getenv("Pass") 
+
+// var database_server = "13.56.168.122:27017"
+// var database = "cb"
+// var collection = "menu"
+// var mongo_user = "cmpe281"
+// var mongo_pass = "cmpe281"
 
 // MenuServer configures and returns a MenuServer instance.
 func MenuServer() *negroni.Negroni {
@@ -75,10 +87,12 @@ func getSystemIp() string {
 // API to find an item in the menu
 func GetMenu(formatter *render.Render) http.HandlerFunc {
 	return func(response http.ResponseWriter, request *http.Request) {
+		fmt.Println("here in Get")
 		session, _ := mgo.Dial(database_server)
 		defer session.Close()
 		session.SetMode(mgo.Monotonic, true)
-		err:= session.DB("counterburger").Login(mongo_user, mongo_pass)
+		fmt.Println("user pass", mongo_user, mongo_pass)
+		err:= session.DB("test").Login(mongo_user, mongo_pass)
 		if err!=nil{
 			log.Fatalf(" %s", err)
 			formatter.JSON(response, http.StatusInternalServerError, "Internal Server Error")

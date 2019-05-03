@@ -1,8 +1,8 @@
 FROM golang:latest 
-EXPOSE 3000
+EXPOSE 8080
 RUN mkdir /app 
 ADD . /app/ 
 WORKDIR /app 
 ENV GOPATH /app
-RUN cd /app ; go install goapi
-CMD ["/app/bin/goapi"]
+RUN cd /app ; go install users
+CMD ["/app/bin/users"]
