@@ -1,14 +1,12 @@
 package main
 
 import (
-	// "encoding/json"
-	// "encoding/json"
 	"encoding/json"
 	"fmt"
 	"net"
 	"net/http"
 
-	// "os"
+	"os"
 	"strings"
 
 	"github.com/codegangsta/negroni"
@@ -20,27 +18,27 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
-const (
-	MongoDBHosts = "ds143326.mlab.com:43326"
-	AuthDatabase = "cmpe281"
-	AuthUserName = "aditi1203"
-	AuthPassword = "Aditi1203!"
+// const (
+// 	MongoDBHosts = "ds143326.mlab.com:43326"
+// 	AuthDatabase = "cmpe281"
+// 	AuthUserName = "aditi1203"
+// 	AuthPassword = "Aditi1203!"
 
-	// TestDatabase = "goinggo"
-)
+// 	// TestDatabase = "goinggo"
+// )
 
-// var mongodb_server = os.Getenv("Server")
-// var mongodb_database = os.Getenv("Database")
-// var mongodb_collection = os.Getenv("Collection")
-// var mongo_user = os.Getenv("User")
-// var mongo_pass = os.Getenv("Pass")
+var mongodb_server = os.Getenv("Server")
+var mongodb_database = os.Getenv("Database")
+var mongodb_collection = os.Getenv("Collection")
+var mongo_user = os.Getenv("User")
+var mongo_pass = os.Getenv("Pass")
 
-var mongodb_server = "ds143326.mlab.com:43326"
-var mongodb_database = "cmpe281"
-var mongodb_collection = "orders"
-var mongo_user = "aditi1203"
-var mongo_pass = "Aditi1203!"
-var AWS_DB = "cmpe281"
+// var mongodb_server = "ds143326.mlab.com:43326"
+// var mongodb_database = "cmpe281"
+// var mongodb_collection = "orders"
+// var mongo_user = "aditi1203"
+// var mongo_pass = "Aditi1203!"
+// var AWS_DB = "cmpe281"
 
 func NewServer() *negroni.Negroni {
 	formatter := render.New(render.Options{
