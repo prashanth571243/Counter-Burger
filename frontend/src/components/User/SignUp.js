@@ -31,7 +31,7 @@ class SignUp extends Component {
             Password : this.state.password
         }
         try{
-            const connectionReqResponse = await axios.post('http://54.193.117.14:8000/user/users/signup', signUpData)
+            const connectionReqResponse = await axios.post('http://kong-elb-234657806.us-west-1.elb.amazonaws.com:80/user/users/signup', signUpData)
             if (connectionReqResponse.status === 201){
                 alert("User has been succesfully created");
                 this.props.history.push("/login");

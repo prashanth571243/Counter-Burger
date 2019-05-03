@@ -24,7 +24,8 @@ class Order extends Component {
     async componentDidMount(){
         console.log("Inside cmpdidmount")
         var userId=JSON.parse(localStorage.getItem('user'))
-        await axios.get(`http://54.193.117.14:8000/order/orders/${userId.id}`)
+        if(localStorage.getItem('user')){
+        await axios.get(`http://kong-elb-234657806.us-west-1.elb.amazonaws.com:80/order/orders/${userId.id}`)
         .then((response,error) => { 
             console.log("Status",response.status)
             result=response.data
@@ -41,6 +42,7 @@ class Order extends Component {
              console.log("Error response",error.response.data)
              this.setState({error_status:error.response.data})
          });
+        }
     }
 
     handleDelete(e1,e2,length){
@@ -52,22 +54,31 @@ class Order extends Component {
        }
        if(length>1){
             console.log("inside delete greater than 1")
-                axios.post(`http://54.193.117.14:8000/order/order/item/${orderId}`,data)
+                axios.post(`http://kong-elb-234657806.us-west-1.elb.amazonaws.com:80/order/order/item/${orderId}`,data)
                 .then((response) => { 
+                    this.setState({
+                        listed:[]
+                    })
+                    console.log(this.state.listed)
                  this.setState({
                  listed : this.state.listed.concat(response.data)
                 })
+                    console.log(this.state.listed)
               }); 
      } else{
          console.log("I am inside delete with 1 item remaining")
-          axios.delete(`http://54.193.117.14:8000/order/order/${orderId}`,data)
+          axios.delete(`http://kong-elb-234657806.us-west-1.elb.amazonaws.com:80/order/order/${orderId}`,data)
                 .then((response) => { 
+                    this.setState({
+                        listed:[]
+                    })
+                    console.log(this.state.listed)
                         this.setState({
-                            listed:" ",
-                            listed : this.state.listed.push(response.data),
+                            listed : this.state.listed.concat(response.data),
                             error_status: " ",
                             item_delete:"deleted"
                     })
+                    console.log(this.state.listed)
                     }); 
      }
     } 
@@ -83,6 +94,8 @@ class Order extends Component {
   
 
     render() {
+        console.log(this.state.listed)
+        console.log(this.state.listed)
         let redirectVar = null;
         if(!localStorage.getItem("user")){
             redirectVar = <Redirect to= "/home"/>
@@ -100,7 +113,6 @@ class Order extends Component {
         }
         else{
         details= this.state.listed.map((item) => {
-
             return(
             <div>
 
@@ -135,6 +147,11 @@ class Order extends Component {
             <div>
             {redirectVar}
                 <img src = {counterburgersymbol} height="100" width="200" alt=""></img>
+                <div className="NavbarLinks">
+                    &nbsp; &nbsp; <Link to="/home" style={{"font-size": "20px", "font-weight" : "800" , "color":"black", "background-color": "white" }}>HOME</Link> 
+                    <Link to="/menu" style={{"font-size": "20px", "font-weight" : "800" , marginLeft: "20px", "color":"black", "background-color": "white"  }}>MENU</Link>
+                    <Link to="/location" style={{"font-size": "20px", "font-weight" : "800" , marginLeft: "20px","color":"black", "background-color": "white"  }}>LOCATION</Link>
+                    </div>
                 <div class="ml-5">
                 <h1 className="cart">Your Order Cart:</h1>
                 {details}
