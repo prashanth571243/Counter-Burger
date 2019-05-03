@@ -9,8 +9,8 @@ import './Menu.css';
 import { Card } from 'antd';
 //const { Meta } = Card;
 var swal = require('sweetalert')
-var hostname = 'http://Menu-1175003683.us-west-1.elb.amazonaws.com:8002/menu' 
-var hostnameOrder = 'http://networklbfinalproject-ee9310850abcdbac.elb.us-west-2.amazonaws.com:8000/orders' 
+var hostname = 'http://54.193.117.14:8000/menu/menu' 
+var hostnameOrder = 'http://54.193.117.14:8000/order/orders' 
 class Menu extends Component {
     
     constructor(props){
@@ -100,8 +100,6 @@ class Menu extends Component {
                     &nbsp; &nbsp; <Link to="/home" style={{"font-size": "20px", "font-weight" : "800" , "color":"black", "background-color": "white" }}>HOME</Link> 
                     <Link to="/menu" style={{"font-size": "20px", "font-weight" : "800" , marginLeft: "20px", "color":"black", "background-color": "white"  }}>MENU</Link>
                     <Link to="/burgerOrder" style={{"font-size": "20px", "font-weight" : "800" , marginLeft: "20px","color":"black", "background-color": "white"  }}>CART</Link>
-                    <Link to="/signup" style={{ "font-size": "20px", "font-weight" : "800" ,marginLeft: "20px", "color":"black", "background-color": "white"  }}>CREATE ACCOUNT</Link>
-                    <Link to="/login" style={{ "font-size": "20px", "font-weight" : "800" ,marginLeft: "20px", "color":"black" , "background-color": "white" }}>LOGIN</Link>
                     </div>
                     <div className="container MenuOustide">
                     <div className="storedetails">

@@ -26,7 +26,7 @@ class Login extends Component {
             Password : this.state.password
         }
         try{
-            const connectionReqResponse = await axios.post('http://localhost:8080/users/signin', loginData)
+            const connectionReqResponse = await axios.post('http://54.193.117.14:8000/user/users/signin', loginData)
             if (connectionReqResponse.status === 201){
                 alert("Login successful");
                 let user = {
@@ -35,7 +35,7 @@ class Login extends Component {
                     name: connectionReqResponse.data.firstname
                 };
                 localStorage.setItem('user', JSON.stringify(user));
-
+                this.props.history.push("/location");
             }
             }
          catch(err) {

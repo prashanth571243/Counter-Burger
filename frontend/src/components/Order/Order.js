@@ -4,6 +4,7 @@ import axios from 'axios';
 import {Link} from 'react-router-dom';
 import {Redirect} from 'react-router';
 var result=[]
+var hostname=""
 
 class Order extends Component {
     constructor(props) {

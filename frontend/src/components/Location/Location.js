@@ -25,9 +25,13 @@ class Location extends Component {
         e.preventDefault();
          const locationData = this.state.location
         try{
-            const connectionReqResponse = await axios.get(`http://localhost:8000/location/getLocation/${locationData}`)
+            const connectionReqResponse = await axios.get(`http://54.193.117.14:8000/location/location/getLocation/${locationData}`)
            console.log("checkpoint")
             console.log(connectionReqResponse.data)
+            this.setState({
+                locationInfo : []
+                
+            })
             this.setState({
                 locationInfo : this.state.locationInfo.concat(connectionReqResponse.data)
             })
@@ -43,20 +47,23 @@ class Location extends Component {
         console.log("this")
         localStorage.setItem("locationName",locationName)
         this.props.history.push("/menu")
-
     }
 
     render(){
         var details = this.state.locationInfo.map((value,i) => {
             return(
-                
-                <div >
+                <div>
+                <div className="locationtable">
+                <br></br>
                    <table>
+                   <br></br>
                    <th><button  type="button" onClick = {() => this.settingLocation(value.locationName)} className="locationButton">{value.locationName}</button></th>
+                   <br></br>
                     {/* <th>{value.locationName}</th> */}
-                    <tr>{value.addressLine1}</tr>
+                     <tr>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{value.addressLine1}</tr>
 
                    </table>
+                   </div>
                 </div>      
             )
 
@@ -72,9 +79,7 @@ class Location extends Component {
   <div className="tableLocation">
     <ul id="horizontal-list-location">
         <li><Link to="/home"><font color = "black" face="Impact" size="4">HOME</font></Link></li>
-      <li><Link to="/login"><font color = "black" face="Impact" size="4">VIEW MENUS</font></Link></li>
-      <li><Link to="/signup"><font color = "black" face="Impact" size="4">CREATE ACCOUNT</font></Link></li>
-      <li><Link to="/login"><font color = "black" face="Impact" size="4 ">SIGN IN</font></Link></li>
+      <li><Link to="/menu"><font color = "black" face="Impact" size="4">VIEW MENUS</font></Link></li>
     </ul>
   </div>
 </div>  
@@ -90,7 +95,7 @@ class Location extends Component {
     <form action="/location" id="FORM_8" onSubmit = {this.onSubmit}  >
     <input type="text" id="INPUT_9" name="location" placeholder="Street address or zip code" onChange = {this.onChangeLocation} />
 <br></br>
-        <input type="submit" id="BUTTON_14" />
+        <input type="submit" id="BUTTON_14" value="Ok"/>
     </form>
     <br></br>
 
