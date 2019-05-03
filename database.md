@@ -25,3 +25,17 @@ Price: int
 Description: string
 ItemType: string
 ```
+
+## Payments
+
+```
+Database used - MongoDB
+Database Name - payments
+Collection Name - payment_details
+PaymentID   string
+OrderID     string
+UserID      string
+TotalPrice  float32
+OrderStatus bool
+PaymentDate string
+```
