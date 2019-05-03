@@ -35,5 +35,5 @@ CMD ["/payment/bin/payment"]
 
 docker build -t adityadoshatti/payment:v9
 ```
-#### 6. Once the dokcer image is ready and published need to follow the steps to create Kubernetes cluster, Follow the following steps
+#### 6. Once the docker image is ready and published need to follow the steps to create Kubernetes cluster, Follow the following steps
 [Google cloud platform steps](GCP_Steps.md)
