@@ -4,13 +4,14 @@ import cbsymbol from './cbsymbol.jpg';
 import burgerdetails from './burgerdetails.png';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import {Redirect} from 'react-router';
 //import {Redirect} from 'react-router';
 import './Menu.css';
 import { Card } from 'antd';
 //const { Meta } = Card;
 var swal = require('sweetalert')
 var hostname = 'http://54.193.117.14:8000/menu/menu' 
-var hostnameOrder = 'http://54.193.117.14:8000/order/orders' 
+var hostnameOrder = 'http://54.193.117.14:8000/order/order' 
 class Menu extends Component {
     
     constructor(props){
@@ -24,7 +25,8 @@ class Menu extends Component {
     }  
 
     addToCart(e1,e2,e3,e4,e5) {
-        var user=localStorage.getItem('user');
+        var user=JSON.parse(localStorage.getItem('user'));
+        console.log(user.id);
         var headers = new Headers();
         //prevent page from refresh
         //e.preventDefault();
@@ -46,7 +48,7 @@ class Menu extends Component {
             console.log("Status Code : ",response.status);
             console.log("Data Sent ",response.data);
             if(response.status === 200){
-                swal("Item Added To The Cart","success") 
+                swal("Item Added To The Cart","","success") 
             }else{
                 swal("Apologies, the item could not be added.","Please Try Again!","error")
             }
@@ -67,7 +69,10 @@ class Menu extends Component {
     }
 
     render() {
-
+        let redirectVar = null;
+        if(!localStorage.getItem("user")){
+            redirectVar = <Redirect to= "/home"/>
+        }
         let wholemenu = this.state.allmenu.map((wholemenu,j) => {
         return(
             <div className ="Menu">
@@ -92,7 +97,7 @@ class Menu extends Component {
 
         return (
             <div>
-            {this.state.redirectVar}
+            {redirectVar}
             <div className="backgroundwallimage">
                 <div className="counterburgersymbol">
                     <img src = {counterburgersymbol} height="100" width="200" alt=""></img>

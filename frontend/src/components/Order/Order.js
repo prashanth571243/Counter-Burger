@@ -23,8 +23,8 @@ class Order extends Component {
 
     async componentDidMount(){
         console.log("Inside cmpdidmount")
-        var userId=localStorage.getItem('user')
-        await axios.get(`http://54.193.117.14:8000/order/orders/${userId}`)
+        var userId=JSON.parse(localStorage.getItem('user'))
+        await axios.get(`http://54.193.117.14:8000/order/orders/${userId.id}`)
         .then((response,error) => { 
             console.log("Status",response.status)
             result=response.data
@@ -76,14 +76,17 @@ class Order extends Component {
         console.log("Redirect handler being called",order_Id,total_amount)
         localStorage.setItem('orderId',order_Id)
         localStorage.setItem('price',total_amount)
-        console.log("Checking localstorage value:",localStorage.getItem('price'))
+        console.log("Checking localstorage value:",JSON.parse(localStorage.getItem('price')))
         this.props.history.push('/payments')
     }
 
   
 
     render() {
-
+        let redirectVar = null;
+        if(!localStorage.getItem("user")){
+            redirectVar = <Redirect to= "/home"/>
+        }
       const templates = this.state.listed;
       console.log("length of listed:",this.state.listed.length)
       const fullrecord = this.state.listed;
@@ -100,6 +103,7 @@ class Order extends Component {
 
             return(
             <div>
+
             <div class="maindiv">
 
                   {
@@ -129,6 +133,7 @@ class Order extends Component {
   
         return(
             <div>
+            {redirectVar}
                 <img src = {counterburgersymbol} height="100" width="200" alt=""></img>
                 <div class="ml-5">
                 <h1 className="cart">Your Order Cart:</h1>

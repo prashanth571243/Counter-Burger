@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import "./location.css";
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import {Redirect} from 'react-router';
 
 
 
@@ -50,9 +51,14 @@ class Location extends Component {
     }
 
     render(){
+        let redirectVar = null;
+        if(!localStorage.getItem("user")){
+            redirectVar = <Redirect to= "/home"/>
+        }
         var details = this.state.locationInfo.map((value,i) => {
             return(
                 <div>
+                {redirectVar}
                 <div className="locationtable">
                 <br></br>
                    <table>
