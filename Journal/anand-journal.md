@@ -13,3 +13,12 @@ Date: 04/09/2019
 -> Distribution of work and guaging suitability of members based on their background
 -> Discussion on possible wow factor implementation
 -> going through previous year's work to have a better understanding of the project
+
+
+-> Created a RIAK cluster of three database instances
+-> Placed a load balancer on top of the database machines
+-> inserted data in the cluster
+
+-> made an image of the application
+-> tagged and pushed the image on dockerhub
+-> 
