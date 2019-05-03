@@ -6,6 +6,7 @@ import {Redirect} from 'react-router';
 import counterburgersymbol from './counterburgersymbol.png';
 import './Order.css';
 var result=[]
+var hostname=""
 
 class Order extends Component {
     constructor(props) {
