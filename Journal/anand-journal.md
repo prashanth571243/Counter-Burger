@@ -21,4 +21,9 @@ Date: 04/09/2019
 
 -> made an image of the application
 -> tagged and pushed the image on dockerhub
--> 
+
+#ECS Creation#
+-> created a container definition using the pushed docker image
+-> created a task definition specifying the details about task
+-> created service by defining various details like number of tasks and load balancing details
+-> Added an auto scaling group with load balancer
