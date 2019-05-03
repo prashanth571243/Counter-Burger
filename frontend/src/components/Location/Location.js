@@ -26,7 +26,7 @@ class Location extends Component {
         e.preventDefault();
          const locationData = this.state.location
         try{
-            const connectionReqResponse = await axios.get(`http://54.193.117.14:8000/location/location/getLocation/${locationData}`)
+            const connectionReqResponse = await axios.get(`http://kong-elb-234657806.us-west-1.elb.amazonaws.com:80/location/location/getLocation/${locationData}`)
            console.log("checkpoint")
             console.log(connectionReqResponse.data)
             this.setState({
@@ -58,7 +58,7 @@ class Location extends Component {
         var details = this.state.locationInfo.map((value,i) => {
             return(
                 <div>
-                {redirectVar}
+             
                 <div className="locationtable">
                 <br></br>
                    <table>
@@ -76,7 +76,7 @@ class Location extends Component {
         })
        return(
            <div>
-               
+                  {redirectVar}
             <div className="location"> 
             <div className="locationNav">
          <span className="locationSpan"> <a href="/" id="A_4"></a>

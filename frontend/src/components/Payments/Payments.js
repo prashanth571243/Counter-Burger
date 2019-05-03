@@ -34,9 +34,9 @@ class Payments extends Component {
             TotalPrice : totalPrice
         }
         try{
-            const connectionReqResponse = await axios.post('http://54.193.117.14:8000/payment/payments', paymentsData)
+            const connectionReqResponse = await axios.post('http://kong-elb-234657806.us-west-1.elb.amazonaws.com:80/payment/payments', paymentsData)
             if (connectionReqResponse.status === 200){
-                const orderDel = await axios.delete(`http://55.193.117.14:8000/order/order/${orderID}`)
+                const orderDel = await axios.delete(`http://kong-elb-234657806.us-west-1.elb.amazonaws.com:80/order/order/${orderID}`)
                 alert("Payment successful, Please LogOut!");
             }
             }

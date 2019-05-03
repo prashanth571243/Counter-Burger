@@ -10,8 +10,8 @@ import './Menu.css';
 import { Card } from 'antd';
 //const { Meta } = Card;
 var swal = require('sweetalert')
-var hostname = 'http://54.193.117.14:8000/menu/menu' 
-var hostnameOrder = 'http://54.193.117.14:8000/order/order' 
+var hostname = 'http://kong-elb-234657806.us-west-1.elb.amazonaws.com:80/menu/menu' 
+var hostnameOrder = 'http://kong-elb-234657806.us-west-1.elb.amazonaws.com:80/order/order' 
 class Menu extends Component {
     
     constructor(props){
