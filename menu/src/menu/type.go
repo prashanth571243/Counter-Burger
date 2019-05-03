@@ -8,4 +8,3 @@ type Item struct {
 	Description 	string	`json:"Description" bson:"Description"`
 	ItemType		string  `json:"ItemType" bson:"ItemType"`
 }
-
