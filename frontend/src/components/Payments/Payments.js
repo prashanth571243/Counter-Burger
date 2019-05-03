@@ -3,7 +3,7 @@ import counterburgersymbol from './counterburgersymbol.png';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import './Payments.css';
-import { CountryDropdown} from 'react-country-region-selector';
+import {Redirect} from 'react-router';
 
 class Payments extends Component {
 
@@ -26,8 +26,8 @@ class Payments extends Component {
         e.preventDefault();
         console.log("in onsubmit")
         const orderID = localStorage.getItem('orderId')
-        const user = localStorage.getItem('user')
-        const totalPrice = localStorage.getItem('price')
+        const user = JSON.parse(localStorage.getItem('user'))
+        const totalPrice = JSON.parse(localStorage.getItem('price'))
         const paymentsData = {
             OrderID : orderID,
             UserID : user.id,
@@ -36,11 +36,12 @@ class Payments extends Component {
         try{
             const connectionReqResponse = await axios.post('http://54.193.117.14:8000/payment/payments', paymentsData)
             if (connectionReqResponse.status === 200){
-                const orderDel = await axios.delete(`http://54.193.117.14:8000/order/order/${orderID}`)
-                alert("Payment successful");
+                const orderDel = await axios.delete(`http://55.193.117.14:8000/order/order/${orderID}`)
+                alert("Payment successful, Please LogOut!");
             }
             }
          catch(err) {
+            window.alert(err.code)
             if (err.response.status === 404){
          }
 
@@ -68,8 +69,13 @@ componentDidMount(){
     }
 
     render() {
+        let redirectVar = null;
+        if(!localStorage.getItem("user")){
+            redirectVar = <Redirect to= "/home"/>
+        }
         return (
             <div>
+            {redirectVar}
                 <div className="counterburgersymbol">
                     <img src = {counterburgersymbol} height="100" width="200" alt=""></img>
                 </div>
