@@ -4,46 +4,59 @@ import cbsymbol from './cbsymbol.jpg';
 import burgerdetails from './burgerdetails.png';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+//import {Redirect} from 'react-router';
 import './Menu.css';
-// import starter from './starter.png'
-// import starter5 from './starter5.png'
-// import starter6 from './starter6.png'
- import starter7 from './starter7.png'
-// import starter8 from './starter8.png'
-// import burger from './burger.png'
-// import burger1 from './burger1.png'
-// import burger2 from './burger2.png'
-// import burger3 from './burger3.png'
-// import burger4 from './burger4.png'
-// import burger5 from './burger5.png'
-// import drinks from './drinks.png'
-// import drinks1 from './drinks1.png'
-// import drinks2 from './drinks2.png'
-// import drinks3 from './drinks3.png'
-// import drinks4 from './drinks4.png'
 import { Card } from 'antd';
-const { Meta } = Card;
-
+//const { Meta } = Card;
+var swal = require('sweetalert')
+var hostname = 'http://Menu-1175003683.us-west-1.elb.amazonaws.com:8002/menu' 
+var hostnameOrder = 'http://networklbfinalproject-ee9310850abcdbac.elb.us-west-2.amazonaws.com:8000/orders' 
 class Menu extends Component {
-    
     
     constructor(props){
         super(props);
         this.state = {
             allmenu: [],  
-            starters: [],
-            burgers: [],
-            beverages: [],
+            redirectVar : null
         }
         //this.handleLogout = this.handleLogout.bind(this);
-        //this.submitBooking = this.submitBooking.bind(this);
+        this.addToCart=this.addToCart.bind(this)
     }  
 
-    
+    addToCart(e1,e2,e3,e4,e5) {
+        var user=localStorage.getItem('user');
+        var headers = new Headers();
+        //prevent page from refresh
+        //e.preventDefault();
+        const data = {
+            UserId: user.id, //LOCAL STORAGE
+            ItemId: e1,
+            ItemName: e2,
+            Price: e3, 
+            Description: e4,
+            ItemType : e5
+        }
+        console.log("dataa",data)
 
-    componentWillMount()
+        //set the with credentials to true
+        //axios.defaults.withCredentials = true;
+
+        axios.post(hostnameOrder,data)
+        .then(response => {
+            console.log("Status Code : ",response.status);
+            console.log("Data Sent ",response.data);
+            if(response.status === 200){
+                swal("Item Added To The Cart","success") 
+            }else{
+                swal("Apologies, the item could not be added.","Please Try Again!","error")
+            }
+        
+        });
+    }
+
+    componentDidMount()
     {
-        axios.get("http://localhost:8000/menu")
+        axios.get(hostname)
                     .then((response) => {
                         console.log("Response data", response.data)
                         this.setState({
@@ -53,57 +66,67 @@ class Menu extends Component {
                 console.log("Checking menu details", this.state.allmenu)
     }
 
-
-
     render() {
 
         let wholemenu = this.state.allmenu.map((wholemenu,j) => {
         return(
+            <div className ="Menu">
                 <Card
                 hoverable
-                style={{ width: 400 }}
-                cover={<img src = {cbsymbol} height="320" width="670" alt=""></img>}
+                style={{ width: 300 }}
+                cover={<img src = {cbsymbol} height="320" width="550" alt=""></img>}
                 className="MenuCards"
                 >
+                <div className = "ItemDescription">
                 <br></br>
-                <Meta
-                title={wholemenu.ItemType}
-                description={wholemenu.ItemName}
-                />
-                <br></br>
-               <p>Description: {wholemenu.Description}</p>
-               <p>Price : {wholemenu.Price}$</p>
-               <br></br>
-               <button onClick={()=>this.addToCart(wholemenu.ItemId)} className="btn btn-danger cartButton ">Add to Cart</button>
+                <p><b>Item Type : </b>{wholemenu.ItemType}</p>
+               <p><b>Item Name : </b>{wholemenu.ItemName}</p>
+               <p><b>Description :</b> {wholemenu.Description}</p>
+               <p><b>Price : </b>{wholemenu.Price}$</p>
+               </div>
+               <button onClick={()=>this.addToCart(wholemenu.ItemId, wholemenu.ItemName, wholemenu.Price, wholemenu.Description, wholemenu.ItemType)} className="btn btn-danger cartButton ">Add to Cart</button>
                 </Card>
+            </div>
         )
         })
 
         return (
             <div>
+            {this.state.redirectVar}
+            <div className="backgroundwallimage">
                 <div className="counterburgersymbol">
                     <img src = {counterburgersymbol} height="100" width="200" alt=""></img>
+                    <div className="NavbarLinks">
+                    &nbsp; &nbsp; <Link to="/home" style={{"font-size": "20px", "font-weight" : "800" , "color":"black", "background-color": "white" }}>HOME</Link> 
+                    <Link to="/menu" style={{"font-size": "20px", "font-weight" : "800" , marginLeft: "20px", "color":"black", "background-color": "white"  }}>MENU</Link>
+                    <Link to="/burgerOrder" style={{"font-size": "20px", "font-weight" : "800" , marginLeft: "20px","color":"black", "background-color": "white"  }}>CART</Link>
+                    <Link to="/signup" style={{ "font-size": "20px", "font-weight" : "800" ,marginLeft: "20px", "color":"black", "background-color": "white"  }}>CREATE ACCOUNT</Link>
+                    <Link to="/login" style={{ "font-size": "20px", "font-weight" : "800" ,marginLeft: "20px", "color":"black" , "background-color": "white" }}>LOGIN</Link>
+                    </div>
                     <div className="container MenuOustide">
                     <div className="storedetails">
-                        <b>THE COUNTER</b>
+                        &nbsp;&nbsp; <b style={{ "font-size": "40px", "font-weight" : "800" , marginBottom: "0px" }}>THE COUNTER</b>
                         <br></br>
-                       <Link to="/location">Change Location</Link>
+                        &nbsp;&nbsp; <Link to="/location">Change Location</Link>
                        <br></br>
-                       <p>Phone: (408) 423-9200</p>
-                       <p>Pickup Hours: Open today 11am-10pm </p>
-                       <p>Accepted Cards: Mastercard, Visa, American Express, Discover</p>
-                    </div>
+                       <p>&nbsp;&nbsp; Phone: (408) 423-9200</p>
+                       <p> &nbsp;&nbsp; Pickup Hours: Open today 11am-10pm </p>
+                       <p>&nbsp;&nbsp; Accepted Cards: Mastercard, American Express, Discover</p>
+                    
                     <div className="burgerdetails">
-                    <img src = {burgerdetails} height="250" width="670" alt=""></img>
-                    <p>Selections vary by location and may have limited availability.<br></br>
+                    <img src = {burgerdetails} height="220" width="550" alt=""></img>
+                    <p style={{"font-size": "15px", "font-weight" : "400",marginLeft: "5px", marginBottom:'5px'}}>Selections vary by location and may have limited availability.<br></br>
                         <a className="allergy" href="/nutrition">Nutritional information<br></br>
                         Allergen information</a>
                     </p>
+
                     </div>
-                    <div className="container Menu">
+                    </div>
+                    <div className="container Menu2">
                         {wholemenu}
                         <br></br>
                     </div>
+                </div>
                 </div>
                 </div>
             </div>
