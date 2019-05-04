@@ -251,15 +251,15 @@ Picture to show data split in Shard server 1.1 (rs0 - primary)
 
 <img width="1440" alt="Screen Shot 2019-05-03 at 7 36 34 PM" src="https://user-images.githubusercontent.com/43122063/57173467-2bb91900-6de5-11e9-8b78-341ffe5563cc.png">
 
-Picture to show data split in Shard server 1.1 (rs0 - secondary)
+Picture to show data split in Shard server 1.2 (rs0 - secondary)
 
 <img width="1440" alt="Screen Shot 2019-05-03 at 7 37 26 PM" src="https://user-images.githubusercontent.com/43122063/57173487-70dd4b00-6de5-11e9-997e-052706c57d05.png">
 
-Picture to show data split in Shard server 1.1 (rs1 - primary)
+Picture to show data split in Shard server 2.1 (rs1 - primary)
 
 <img width="1440" alt="Screen Shot 2019-05-03 at 7 37 42 PM" src="https://user-images.githubusercontent.com/43122063/57173490-82265780-6de5-11e9-8950-1b40bab8d72a.png">
 
-Picture to show data split in Shard server 1.1 (rs1 - secondary)
+Picture to show data split in Shard server 2.2 (rs1 - secondary)
 
 <img width="1440" alt="Screen Shot 2019-05-03 at 7 38 15 PM" src="https://user-images.githubusercontent.com/43122063/57173500-a2eead00-6de5-11e9-983c-1b1333d585e9.png">
 
