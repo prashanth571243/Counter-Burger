@@ -136,6 +136,10 @@ We have followed service-oriented architecture as a result of which the applicat
 * Deployed the front-end using Heroku 
 * End to end testing(manual) conducted successfully.
 
+## Project Kanbad Board ##
+
+#### [Project Counter Burger](https://github.com/nguyensjsu/sp19-281-vcloud9.0/projects/1)
+
 ## Architecture Diagram ##
 
 ![Architecture Diagram](./Images/ArchitectureDiagram.png "Architecture Diagram")
@@ -170,6 +174,16 @@ We have followed service-oriented architecture as a result of which the applicat
 1. APIs are running in Amazon Elastic Container Service having 2 tasks running
 2. The ECS connects with Load balancer over the Riak KV cluster
 3. Database used in Riak KV, which has best resiliency. A cluster of 3 nodes of Riak instances running in AWS are used.
+
+## WOW FACTOR ##
+
+#### 1. Use Google Cloud Platform for complete Verticle slice of a microservice, Load Balancing, APIs and Database completely in GCP
+
+#### 2. One Microservice has hybrid Cloud Provider used, APIs are in GCP Kubernetes Cluster and Database is in AWS Private subnet with Mongoos in Public subnet
+
+#### 3. Used Amazon Elastic Container Service, Container orchestration service for APIs.
+
+#### 4. Every Verticle Slice(Microservice) is unique in architecture.
 
 ## AKF Scale Cube ##
 
