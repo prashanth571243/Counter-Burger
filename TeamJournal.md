@@ -1,7 +1,7 @@
-# TEAM JOURNAL #
-<br>
-## Counter Burger Application ##
-## Team Members ##
+# TEAM JOURNAL 
+## Counter Burger Application 
+
+## Team Members 
 - Aditi Kumari
 - Aditya Doshatti
 - Anand Kumar
@@ -10,7 +10,7 @@
 
 <br>
 
-## Application structure ##
+## Application Structure ##
 We have followed service-oriented architecture as a result of which the application has been decomposed into five microservices namely,
 * Payments
 * menu
@@ -18,7 +18,7 @@ We have followed service-oriented architecture as a result of which the applicat
 * Location
 * User
 
-## Weekly development ##
+## Weekly Development ##
 
 ### Week 1 (March 25 - March 31) ###
 #### MoM (notes) ####
@@ -177,13 +177,13 @@ We have followed service-oriented architecture as a result of which the applicat
 
 ## WOW FACTOR ##
 
-#### 1. Use Google Cloud Platform for complete Verticle slice of a microservice, Load Balancing, APIs and Database completely in GCP
+#### 1. Use Google Cloud Platform for complete Vertical slice of a microservice, Load Balancing, APIs and Database completely in GCP.
 
-#### 2. One Microservice has hybrid Cloud Provider used, APIs are in GCP Kubernetes Cluster and Database is in AWS Private subnet with Mongoos in Public subnet
+#### 2. One Microservice has hybrid Cloud Provider used, APIs are in GCP Kubernetes Cluster and Database is in AWS Private subnet with Mongos in Public subnet.
 
 #### 3. Used Amazon Elastic Container Service, Container orchestration service for APIs.
 
-#### 4. Every Verticle Slice(Microservice) is unique in architecture.
+#### 4. Every Vertical Slice(Microservice) is unique in architecture.
 
 ## AKF Scale Cube ##
 
