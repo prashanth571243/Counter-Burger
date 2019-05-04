@@ -4,6 +4,21 @@
     height: 600px;
 }
 
+.logoutdiv{
+    margin-top: -5%;
+    margin-bottom: 7%;
+    font-weight: 40px;
+    font-size: 18px;
+}
+
+/* .counterburgersymbol{
+    width:600px;
+} */
+
+.logout{
+    margin-top: -100%
+}
+
 .BillDetails{
     margin-top: 7%;
     font-weight: 40px;
@@ -13,4 +28,8 @@
 .paymentMethod{
     font-size: 20px;
     font-weight: 20px;
+}
+
+.logout{
+    margin-left: 90%;
 }

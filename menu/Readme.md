@@ -1,8 +1,8 @@
-# Payment Module APIs
+# Menu Module APIs
 
 
 ### APIs to process Menu in GoLang
-### Server running in ECS on AWS
+### Server running in Kubernetes on AWS
 
 **Attributes**
 
@@ -16,7 +16,7 @@ List of all Attributes in a Menu Object (Attributed in struct)
 |Description |String |Description of the Item |
 |ItemType	| String | Type of the item|
 
-0. Ping the API endpoint
+1. Ping the API endpoint
     **Request**
     ```
     GET /menu/ping
@@ -25,17 +25,18 @@ List of all Attributes in a Menu Object (Attributed in struct)
     **Response**
     ```
     {
-    "vCloud9.0 Menu API version 1.0 alive!"
+    "Test": "Burger Menu API Server Working on machine: 10.20.2.5"
     }
     ```
 
 
-1. Post payment for an order
+2. Get Menu details for a restaurant
 
     **Request**
     ```
     GET /menu
     Content-Type: application/json
+    ```
    
     **Response Body**
 
@@ -73,12 +74,12 @@ List of all Attributes in a Menu Object (Attributed in struct)
     |ItemName | String | Name of the item |
     |Price | Integer  | Price of the item|
     |Description |String |Description of the Item |
-    |ItemType	| String | Type of the item|
+    |ItemType| String | Type of the item|
 
     (Status code: 404)
 
     |Parameter	|Type |	Description|
     |-----|-----|------|
-    |messsage	|String|Error string|
+    |message	|String|Error string|
 
 
