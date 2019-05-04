@@ -20,7 +20,7 @@
 
 ## Architecture Diagram
 
-![Architecture Diagram](ArchitectureDiagram.png "Architecture Diagram")
+![Architecture Diagram](./Images/ArchitectureDiagram.png "Architecture Diagram")
 
 
 ## [Team Journal](./TeamJournal.md)
