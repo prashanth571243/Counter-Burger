@@ -2,6 +2,7 @@
 
 ```
 Database used - MySQL
+
 Table Name - user
 CREATE TABLE user (
     userid varchar(255) NOT NULL,
@@ -17,8 +18,11 @@ CREATE TABLE user (
 
 ```
 Database used - MongoDB
+
 Database Name - counterburger
 Collection Name - menu
+
+Schema:
 ItemId: string 	
 ItemName: string 
 Price: int	   
@@ -30,8 +34,11 @@ ItemType: string
 
 ```
 Database used - MongoDB
+
 Database Name - payments
 Collection Name - payment_details
+
+Schema:
 PaymentID   string
 OrderID     string
 UserID      string
@@ -56,7 +63,28 @@ State         string
 Country       string 
 Phone         string 
 Email         string 
-Hours         string 
+Hours         string  
 AcceptedCards string 
 Distance      string 
 ```
+
+## Orders
+
+```
+Database used - MongoDB
+
+Database Name - cmpe281
+Collection Name - order
+
+Schema:
+orderID string
+userId string
+orderStatus string
+itemName string
+itemId string
+price float32
+itemType string
+description string
+totalAmount float32
+```
+
