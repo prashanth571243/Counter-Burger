@@ -136,3 +136,37 @@ We have followed service-oriented architecture as a result of which the applicat
 * Spin-up two EC2 instances with KONG containers with a elb to distribute load and avoid single point of failure for API Gateway
 * Deployed the front-end using Heroku 
 * End to end testing(manual) conducted successfully.
+
+
+## Architecture Diagram ##
+
+## AKF Scale Cube ##
+
+## Demonstrating our application's ability to handle a network partition ##
+
+1. A user is logged in
+2. The user wants to search for location based on zip code
+3. Even after a partition is created in the location database, the location details are always available.
+
+For this purpose, an AP system - Riak KV is chosen which is always available even under partiton
+
+Figure :- ELB showing all riak nodes in the cluster as working
+![Screenshot from 2019-05-03 15-57-56](https://user-images.githubusercontent.com/43103509/57172496-abd78280-6dd5-11e9-9ead-9c605f84e551.png)
+
+Figure :- Testing the location api from front end before partition
+![Screenshot from 2019-05-03 15-59-18](https://user-images.githubusercontent.com/43103509/57172523-ee00c400-6dd5-11e9-96d4-185fb5502d06.png)
+
+Figure :- ELB showing riak nodes after one node stops working
+![Screenshot from 2019-05-03 15-59-51](https://user-images.githubusercontent.com/43103509/57172549-551e7880-6dd6-11e9-9dde-447842aa4733.png)
+
+Figure :- Testing the location api from front end after partition
+![Screenshot from 2019-05-03 16-00-52](https://user-images.githubusercontent.com/43103509/57172553-73847400-6dd6-11e9-8226-39a8e027d001.png)
+
+## Testing ##
+
+
+
+
+
+
+
