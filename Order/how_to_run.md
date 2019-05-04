@@ -46,7 +46,7 @@ curl -X GET \
 
 #### 2. Start Docker
 
-sudo systemctl start docker
+sudo systemctl start docker<br>
 sudo systemctl is-active docker
 
 
@@ -73,7 +73,7 @@ CMD ["/app/bin/order"]
 
 #### 5. Build the docker image locally
 
-sudo docker build -t order .
+sudo docker build -t order . <br>
 sudo docker images
 
 
@@ -108,6 +108,8 @@ Run the command to create the container:
  sudo docker run --name order -e Server=ip-10-0-1-70.us-west-2.compute.internal:27017 
  -e Database=admin -e Collection=order -e User=cmpe281 -e Pass=cmpe281 -p 8000:8000 -d aditi1203/order:v1
 ```
+![upload](https://user-images.githubusercontent.com/28626925/57173972-af5e1e80-6e54-11e9-8f20-e39d305cec8f.png)
+
 
 #### 11. Clean Up docker environment if needed
 
