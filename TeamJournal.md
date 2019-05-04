@@ -142,6 +142,62 @@ We have followed service-oriented architecture as a result of which the applicat
 
 ## AKF Scale Cube ##
 
+#### X Axis: Replication
+ We have implemented replication of data in all the five microservices. 
+
+   | Micoservice | Type	of Replication  |
+   |----|----|
+   | User | RDS Replica Set |
+   | Location | Riak Cluster |
+   | Menu | MongoDB Replica Set |
+   | Order | MongoDB Replica Set |
+   | Payment | MongoDB Replica Set |
+   
+  > The series of steps to show the replication of data in MongoDB Replica Set:
+   
+   1. Posting a order from Postman:
+   
+   ![Screenshot (434)](https://user-images.githubusercontent.com/28626925/57173229-3c4faa80-6e4a-11e9-8363-2b29adf9302c.png)
+   
+   
+   
+   2. Checking the record from the primary node of MongoDB Replica Set.
+   
+   ![aws_mongo1](https://user-images.githubusercontent.com/28626925/57173184-62c11600-6e49-11e9-8653-2576a44f8b01.png)
+   
+   
+   3. Checking the record from secondary nodes of the replica set.
+   
+![aws img](https://user-images.githubusercontent.com/28626925/57173178-4b822880-6e49-11e9-95b1-224981c52b6b.png)
+
+   
+   ![Screenshot from 2019-05-04 08-34-53](https://user-images.githubusercontent.com/28626925/57173165-24c3f200-6e49-11e9-987a-469b0e82e6e1.png)
+   
+   
+
+
+#### Y Axis: Microservices
+
+ We have split our counterburger application into five microservices.
+  ```
+  User
+  Location
+  Menu
+  Order
+  Payment
+  ```
+ We have developed our application in such a way that even if one microservice goes down, the users will be able to use   
+ the rest features of the applications without any difficulty.
+
+#### Z Axis: Sharding
+
+ We have implemented these series of steps to test sharding of data in Menu and Order microservices.
+ 
+ These are series of steps taken to shard the data:
+ 1. Inserting the data in primary node and fetching the data from secondary nodes. This proves the consistency of data is  maintained. 
+ 2. Isolating a secondary node from its cluster and inserting the data in the cluster. This will help to prove if we read from the isolated secondary node, we will get the stale data.
+ 3. Removing the isolation mechanism used and connect the secordary node back to its cluter. If we read now, we will get the updated data. This will prove the replication of data.   
+
 ## Demonstrating our application's ability to handle a network partition ##
 
 1. A user is logged in
