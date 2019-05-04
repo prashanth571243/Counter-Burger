@@ -218,6 +218,16 @@ Figure :- ELB showing riak nodes after one node stops working
 Figure :- Testing the location api from front end after partition
 ![Screenshot from 2019-05-03 16-00-52](https://user-images.githubusercontent.com/43103509/57172553-73847400-6dd6-11e9-8226-39a8e027d001.png)
 
+The microservices are not interdependent. Thus, even if one service is down, the others work fine.
+
+Figure :- Making Payments down
+![Screen Shot 2019-05-03 at 8 30 02 PM](https://user-images.githubusercontent.com/43103509/57173327-cbc17300-6de2-11e9-8c66-00bb699b9bea.png)
+
+Figure :- Cart working fine
+
+![Screen Shot 2019-05-03 at 8 36 28 PM](https://user-images.githubusercontent.com/43103509/57173351-32df2780-6de3-11e9-95a3-c079db4fe343.png)
+
+
 ## Testing ##
 
 
