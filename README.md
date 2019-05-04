@@ -13,11 +13,11 @@
 
 | Name         | Who         |
 |-----------|-----------|
-|User       | Ramya     |
+|Users       | Ramya     |
 |Menu       | Sanjna    |
-|Order/Cart | Aditi   |
-|Payment    | Aditya      |
-| Location  | Anand    |
+|Orders/Cart | Aditi   |
+|Payments    | Aditya      |
+| Locations  | Anand    |
 
 
 ## Architecture Diagram
