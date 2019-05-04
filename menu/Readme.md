@@ -16,7 +16,7 @@ List of all Attributes in a Menu Object (Attributed in struct)
 |Description |String |Description of the Item |
 |ItemType	| String | Type of the item|
 
-0. Ping the API endpoint
+1. Ping the API endpoint
     **Request**
     ```
     GET /menu/ping
@@ -30,7 +30,7 @@ List of all Attributes in a Menu Object (Attributed in struct)
     ```
 
 
-1. Post payment for an order
+2. Get Menu details for a restaurant
 
     **Request**
     ```
@@ -80,6 +80,6 @@ List of all Attributes in a Menu Object (Attributed in struct)
 
     |Parameter	|Type |	Description|
     |-----|-----|------|
-    |messsage	|String|Error string|
+    |message	|String|Error string|
 
 
