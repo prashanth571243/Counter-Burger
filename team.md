@@ -12,10 +12,10 @@ Counter Burger Online Orders [(Ref Link)](https://order.thecounter.com/)
 
 # Modules 
 
-| Name         | Who         |
-|-----------|-----------|
-|User       | Ramya     |
-|Menu       | Sanjna    |
-|Order/Cart | Aditi   |
-|Payment    | Aditya      |
-| Location  | Anand    |
+| Name      | Who       | SID       |
+|-----------|-----------|-----------|
+|User       | Ramya     | 012435696 |
+|Menu       | Sanjna    | 013736060 |
+|Order/Cart | Aditi     | 013711568 |
+|Payment    | Aditya    | 013312195 |
+| Location  | Anand     | 013006721 |
