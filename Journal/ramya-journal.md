@@ -7,13 +7,18 @@ Go for backend <br />
 NoSQL database - MongoDB since it is a payments system and requires to be consistent always <br />
 
 ## Initial Discussion on database architecture
-MySQL for login details, MongoDB for details of products, Riak for storing products and their count.  
+MySQL for login details, MongoDB for details of menu, payments and orders. Riak for storing location details.  
 
 
 ## Progress
 
-Week 1 - UI created for sign up
-Week 1 - UI created for login
+Week 1 - Decided Counter Burger as application
+Week 2 - Divided the application into microservices, will be taking up User
+Week 3 - Setup RDS and go api is created to connect to the RDS
+Week 4 - Completed the APIs and front-end react code
+Week 5 - Deployment
+Week 6 - Integration and testing
+
 
 
 
