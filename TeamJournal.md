@@ -1,6 +1,5 @@
 # TEAM JOURNAL #
 <br>
-
 ## Counter Burger Application ##
 ## Team Members ##
 - Aditi Kumari
@@ -137,6 +136,10 @@ We have followed service-oriented architecture as a result of which the applicat
 * Deployed the front-end using Heroku 
 * End to end testing(manual) conducted successfully.
 
+## Project Kanbad Board ##
+
+#### [Project Counter Burger](https://github.com/nguyensjsu/sp19-281-vcloud9.0/projects/1)
+
 ## Architecture Diagram ##
 
 ![Architecture Diagram](./Images/ArchitectureDiagram.png "Architecture Diagram")
@@ -171,6 +174,16 @@ We have followed service-oriented architecture as a result of which the applicat
 1. APIs are running in Amazon Elastic Container Service having 2 tasks running
 2. The ECS connects with Load balancer over the Riak KV cluster
 3. Database used in Riak KV, which has best resiliency. A cluster of 3 nodes of Riak instances running in AWS are used.
+
+## WOW FACTOR ##
+
+#### 1. Use Google Cloud Platform for complete Verticle slice of a microservice, Load Balancing, APIs and Database completely in GCP
+
+#### 2. One Microservice has hybrid Cloud Provider used, APIs are in GCP Kubernetes Cluster and Database is in AWS Private subnet with Mongoos in Public subnet
+
+#### 3. Used Amazon Elastic Container Service, Container orchestration service for APIs.
+
+#### 4. Every Verticle Slice(Microservice) is unique in architecture.
 
 ## AKF Scale Cube ##
 
@@ -229,6 +242,40 @@ We have followed service-oriented architecture as a result of which the applicat
  1. Inserting the data in primary node and fetching the data from secondary nodes. This proves the consistency of data is  maintained. 
  2. Isolating a secondary node from its cluster and inserting the data in the cluster. This will help to prove if we read from the isolated secondary node, we will get the stale data.
  3. Removing the isolation mechanism used and connect the secordary node back to its cluter. If we read now, we will get the updated data. This will prove the replication of data.   
+ 
+ Picture to show multiple EC2 instances in AWS for MongoDB Sharding (In Private Subnet - all instances, only mongos in public subnet)
+ 
+ <img width="1440" alt="Screen Shot 2019-05-03 at 6 49 53 PM" src="https://user-images.githubusercontent.com/43122063/57173435-cb29dc00-6de4-11e9-9266-247378fe6db2.png">
+ 
+ Picture to show shards from config server nodes.
+
+<img width="1440" alt="Screen Shot 2019-05-03 at 7 21 21 PM" src="https://user-images.githubusercontent.com/43122063/57173396-23141300-6de4-11e9-964f-d920cf3d4b0a.png">
+
+<img width="1440" alt="Screen Shot 2019-05-03 at 7 22 21 PM" src="https://user-images.githubusercontent.com/43122063/57173399-3626e300-6de4-11e9-904f-e948545201e5.png">
+
+Picture to show Menu collection data from Mongos Instance 
+
+<img width="1440" alt="Screen Shot 2019-05-03 at 7 29 24 PM" src="https://user-images.githubusercontent.com/43122063/57173406-59519280-6de4-11e9-9ac1-afc997fe50b2.png">
+
+Picture to show shard distribution across multiple shard servers. Shard key for Menu database is Object Id.
+
+<img width="1440" alt="Screen Shot 2019-05-03 at 7 29 38 PM" src="https://user-images.githubusercontent.com/43122063/57173452-04fae280-6de5-11e9-8e8d-5aa58fd9b704.png">
+
+Picture to show data split in Shard server 1.1 (rs0 - primary)
+
+<img width="1440" alt="Screen Shot 2019-05-03 at 7 36 34 PM" src="https://user-images.githubusercontent.com/43122063/57173467-2bb91900-6de5-11e9-8b78-341ffe5563cc.png">
+
+Picture to show data split in Shard server 1.2 (rs0 - secondary)
+
+<img width="1440" alt="Screen Shot 2019-05-03 at 7 37 26 PM" src="https://user-images.githubusercontent.com/43122063/57173487-70dd4b00-6de5-11e9-997e-052706c57d05.png">
+
+Picture to show data split in Shard server 2.1 (rs1 - primary)
+
+<img width="1440" alt="Screen Shot 2019-05-03 at 7 37 42 PM" src="https://user-images.githubusercontent.com/43122063/57173490-82265780-6de5-11e9-8950-1b40bab8d72a.png">
+
+Picture to show data split in Shard server 2.2 (rs1 - secondary)
+
+<img width="1440" alt="Screen Shot 2019-05-03 at 7 38 15 PM" src="https://user-images.githubusercontent.com/43122063/57173500-a2eead00-6de5-11e9-983c-1b1333d585e9.png">
 
 ## Demonstrating our application's ability to handle a network partition ##
 
