@@ -39,3 +39,24 @@ TotalPrice  float32
 OrderStatus bool
 PaymentDate string
 ```
+
+## Locations
+
+```
+Database used - RIAK KV
+
+data structure
+LocationName  string 
+LocationId    string 
+Zipcode       string 
+AddressLine1  string 
+AddressLine2  string 
+City          string 
+State         string 
+Country       string 
+Phone         string 
+Email         string 
+Hours         string 
+AcceptedCards string 
+Distance      string 
+```

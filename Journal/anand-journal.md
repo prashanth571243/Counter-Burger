@@ -1,29 +1,48 @@
 Project kickoff
 Today we had our first team project meet in which we discussed about the potential domains on which we can work and the scope of our project.
 
-### discussion highlights ###
--> project domain: transaction management <br/>
--> project architecture: Service Oriented Architecture(SOA) <br/>
--> Potential choice of database: MongoDB <br/>
--> Development model: Agile <br/><br>
+### Week 1 (March 25 - March 31) ###
+* Researched the various possible applications that we can develop
+* Decided on the Application Domain
+* Discussed the depth of scope that we want to cover
+* Decided to develop Counter burger Application
+* Decided to use Microservices development technique
 
-Date: 04/09/2019
+### Week 2 (April 1 - April 7) ###
+* Decided the services to decompose 
+* Discussed about the requirements and resources needed.
+* Constructed the ncessary folder structure 
+* Created Individual Journals to log personal progress
+* Discussed about the relevant Database options
+* Everyone was assigned a microservice to work on.
+* Go was decided to be the language for writing APIs.
+* Decided on suitable databases for each microservice
 
--> Possible microservices
--> Distribution of work and guaging suitability of members based on their background
--> Discussion on possible wow factor implementation
--> going through previous year's work to have a better understanding of the project
+### Week 3 (April 8 - April 14) ###
+* Creation and configuration of databases
+* started writing APIs
+* Discussed the front-end technologies to be used.
+* Flow of the website was decided
+* Narrowed down on React for developing UI
+* Created a RIAK KV database cluster 
+* Setup go backend to connect to RIAK cluster and tested it using PING handler API. 
+* Created intital setup for the react front end and started building the microservice UI
 
+### Week 4 (April 15 - April 21) ###
+* Discussed the necessary APIs for running the application
+* Created API for getting, posting and deleting the Location details  
+* Completed UI development for the microservice
 
--> Created a RIAK cluster of three database instances
--> Placed a load balancer on top of the database machines
--> inserted data in the cluster
+### Week 5 (April 22 - April 28) ###
+* Discuss the appropriate deployment methods for individual services
+* weighed pros and cons of various potential means
+* Deployed the application on Amazon Elastic Container Service with an Application load balancer with Auto Scaling group
 
--> made an image of the application
--> tagged and pushed the image on dockerhub
-
-#ECS Creation#
--> created a container definition using the pushed docker image
--> created a task definition specifying the details about task
--> created service by defining various details like number of tasks and load balancing details
--> Added an auto scaling group with load balancer
+### Week 6 (April 29 - May 3) ###
+* integration of microservices using KONG API Gateway
+* Front-end deployment sta
+* Spin-up two EC2 instances with KONG containers with a elb to distribute load and avoid single point of failure for API Gateway
+* Deployed the front-end using Heroku 
+* End to end testing(manual) conducted successfully.
+rtegy discussion
+* End to end testing

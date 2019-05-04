@@ -1,4 +1,4 @@
-# Ideas
+# Progress Report with Ideas
 Either going for Counter Burger or Clipper Future. 
 
 Can implement Frontend in React and use MongoDB for sharding and replication.
@@ -33,3 +33,5 @@ Launch Linux AMI Server 2.2 Instance
   SG open ports: 22, 27017, 27018, 27019
   Key Pair: cmpe281-us-west-1.pem
   Name: config-server1
+
+MongoDB is sharded and frontend is deployed on heroku.

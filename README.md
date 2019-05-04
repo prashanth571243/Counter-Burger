@@ -1,5 +1,5 @@
 # Counter Burger
 
-## Architechture Diagram
+## Architecture Diagram
 
 ![Architecture Diagram](CMPE281_Final.png "Architecture Diagram")
