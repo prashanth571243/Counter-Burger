@@ -1,11 +1,13 @@
 # Counter Burger
 
 ## Members 
-- Aditi Kumari      012435696
-- Aditya Doshatti   013736060
-- Anand Kumar       013711568
-- Ramya Iyer        013312195
-- Sanjna Dhamejani  013006721
+  | Name | SJSU ID  |
+   |----|----|
+   | **Aditi Kumari** |  012435696 |
+   | **Aditya Doshatti** | 013736060 |
+   | **Anand Kumar**  | 013711568 |
+   | **Ramya Iyer** | 013312195 |
+   | **Sanjna Dhamejani**  | 013006721 |
 
 ## Modules 
 
