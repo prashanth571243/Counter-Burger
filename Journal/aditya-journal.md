@@ -11,3 +11,13 @@ How do we use each person's personal project?
 - Everyone will have different microservice and they will use their own personal project for their microservice
 
 What should be done under WOW factor and when can that be implemented?
+- Can use GCP for kubernetes and also for Database
+
+## Progress
+
+Week 1 - Discussed which project can be implemented and decided Counter Burger as application 
+Week 2 - Discussed how can we divide project and what all technologies to use 
+Week 3 - Took up Payments API and Started learning GO 
+Week 4 - Created all API end points started exploring GCP
+Week 5 - Deploymed APIs in GCP and started exploring GCP compute engine to create MongoDB Cluster 
+Week 6 - Deployed everything intergated and tested everthing with front end
