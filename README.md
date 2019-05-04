@@ -20,4 +20,9 @@
 
 ## Architecture Diagram
 
-![Architecture Diagram](CMPE281_Final.png "Architecture Diagram")
+![Architecture Diagram](ArchitectureDiagram.png "Architecture Diagram")
+
+
+## [Team Journal](./TeamJournal.md)
+
+## [Project Counter Burger Board](https://github.com/nguyensjsu/sp19-281-vcloud9.0/projects/1)
