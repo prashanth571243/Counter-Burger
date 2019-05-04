@@ -14,7 +14,7 @@
 
 #### 4. Select your restaurent
 
-![Restaurent](./Images/ZipToGetRestaurent "Zip to get Restaurent")
+![Restaurent](./Images/ZipToGetRestaurents.png "Zip to get Restaurent")
 
 #### 5. See Menu to select items
 
@@ -36,7 +36,7 @@
 ![Checkout](./Images/CheckoutByGivingPaymentDetails.png "Payment details")
 
 #### 9. Payment Success
-![Payment Success](./Images/PaymentSuccess.png "Success Payment")
+![Payment Success](./Images/PaymentSucess.png "Success Payment")
 
 
 ## Configurations ScreenShots
@@ -57,13 +57,13 @@
 
 ##### 4. Kubernetes Service Exposed
 
-![Kubernetes Service Exposed](./Images/KubernetesServiceExposed.png)
+![Kubernetes Service Exposed](./Images/KuberntesServiceExposed.png)
 
 #### ECS Configuration
 
 ##### 1. ECS Cluster
 
-![Cluster](./Images/ECSCLuster.png)
+![Cluster](./Images/ECSCluster.png)
 
 ##### 2. ECS Active Container Definition
 
@@ -73,7 +73,7 @@
 
 ##### 1. RDS Cluster
 
-![RDS Cluster](./Images/RDSCLuster.png)
+![RDS Cluster](./Images/RDSCluster.png)
 
 ##### 2. RDS Database Config
 
